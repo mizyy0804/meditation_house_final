@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>명상의 집</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="start-screen" class="full-screen">
+        <img src="start_obj.webp" id="start-object" alt="시작하기">
+        <div class="press-start-text">화면을 클릭하여 입장하세요</div>
+    </div>
+
+    <div id="main-screen" class="full-screen scene">
+        <div id="meditation-timer">명상 시간 00 : 00</div>
+
+        <div id="text-carousel">명상의 공간에서 잠시나마 휴식해 보세요.</div>
+
+        <div id="room-wrapper">
+            <img src="main_obj.webp" class="room-structure" alt="거실">
+
+            <img src="obj_window.webp" id="obj-window" class="interactive-object" alt="창문">
+            <img src="obj_pendulum.webp" id="obj-pendulum" class="interactive-object" alt="추">
+            <img src="obj_candle.webp" id="obj-candle" class="interactive-object" alt="초">
+            <img src="obj_light.webp" id="obj-light" class="sound-object" alt="스탠드">
+            <img src="obj_mirror.webp" id="obj-mirror" class="sound-object" alt="거울">
+        </div>
+
+        <div class="bgm-credit">BGM : Saya no Uta OST - Sabbath</div>
+    </div>
+
+    <div id="scene-window" class="full-screen scene">
+        <h3>창문</h3>
+        <p>빗소리를 들으며 차분해져요.</p>
+        <div class="rain front-row"></div>
+        <div class="rain back-row"></div>
+        <button class="back-btn">돌아가기</button>
+    </div>
+
+    <div id="scene-pendulum" class="full-screen scene">
+        <h3>추</h3>
+        <p>흔들리는 리듬에 시선을 맞추며 잡념을 떨쳐내세요.</p>
+        <div class="pendulum-container">
+            <div class="pendulum">
+                <div class="pendulum_box">
+                    <div class="ball first"></div>
+                    <div class="ball"></div>
+                    <div class="ball"></div>
+                    <div class="ball"></div>
+                    <div class="ball last"></div>
+                </div>
+            </div>
+        </div>
+        <button class="back-btn">돌아가기</button>
+    </div>
+
+    <div id="scene-candle" class="full-screen scene">
+        <h3>촛불</h3>
+        <p>일렁이는 불빛을 쳐다보며 함께 호흡해요.</p>
+
+        <div class="particle-container">
+            <div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+        </div>
+        
+        <div class="meditation-container">
+            
+            <div class="breath-side left">
+                <div class="ripple-circle"></div>
+                <span class="breath-text inhale">들이마시고...</span>
+            </div>
+
+            <div class="holder">
+                <div class="candle">
+                    <div class="blinking-blow"></div>
+                    <div class="thread"></div>
+                    <div class="glow"></div>
+                    <div class="flame"></div>
+                </div>
+            </div>
+
+            <div class="breath-side right">
+                <div class="ripple-circle"></div>
+                <span class="breath-text exhale">내쉬고...</span>
+            </div>
+
+        </div>
+
+        <button class="back-btn">돌아가기</button>
+    </div>
+
+    <audio id="bgm-main" src="house_bgm.mp3" loop></audio>
+    <audio id="audio-rain" src="rain.mp3" loop></audio>
+    <audio id="audio-candle" src="candle.mp3" loop></audio>
+    <audio id="audio-pendulum" src="pendulum.mp3" loop></audio>
+    <audio id="sfx-window" src="window.mp3"></audio>
+    <audio id="sfx-light" src="light.mp3"></audio>
+    <audio id="sfx-mirror" src="mirror.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

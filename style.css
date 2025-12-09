@@ -1,0 +1,269 @@
+/* --- 기본 설정 --- */
+/* 기본 설정 */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    /* [★ 수정] 폰트 변경 (둘기마요 고딕) */
+    font-family: 'DoolgiMayoGothic', 'CucumberSalad', 'Malgun Gothic', sans-serif; 
+    background-color: #380000; 
+    color: white;
+    overflow: hidden; /* 스크롤바 숨기기 */
+}
+
+/* [★ 수정] 웹폰트 임포트 (파일 업로드 필요 없음) */
+@font-face {
+    font-family: 'DoolgiMayoGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* ... (이하 나머지 코드는 그대로 두시면 됩니다) ... */
+
+.full-screen {
+    width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+    display: none; flex-direction: column; justify-content: center; align-items: center;
+}
+
+/* --- 1. 시작 화면 --- */
+#start-screen {
+    display: flex; background-image: url('start_bg.webp');
+    background-size: 100% 100%; background-position: center;
+    cursor: pointer; z-index: 100; position: relative;
+}
+
+#start-object { 
+    width: 1200px; 
+    height: auto; 
+    transition: transform 0.3s ease; 
+}
+#start-screen:hover #start-object { transform: scale(1.05); }
+
+.press-start-text { 
+    position: absolute; bottom: 15%; font-size: 1.2rem; animation: blink 2s infinite; 
+}
+@keyframes blink { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+
+/* --- 2. 메인 화면 --- */
+#main-screen {
+    background-image: url('main_bg.png'); background-size: cover;
+    background-position: center; position: relative; overflow: hidden;
+}
+
+/* [수정] 명상 타이머 스타일 (버튼 형식) */
+#meditation-timer {
+    position: absolute;
+    top: 30px; 
+    right: 40px;
+    
+    /* 폰트 설정 */
+    font-size: 1.3rem;
+    color: #3e0000; /* 텍스트 컬러 */
+    font-weight: bold;
+    letter-spacing: 1px;
+    
+    /* 박스 디자인 */
+    background-color: #b8dcf3; /* 박스 컬러 */
+    padding: 12px 25px; /* 내부 여백 (위아래 12px, 좌우 25px) */
+    border-radius: 50px; /* 라운딩 최대 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* 살짝 떠있는 듯한 그림자 */
+    
+    z-index: 100;
+    /* 드래그 방지 및 커서 설정 */
+    user-select: none;
+    cursor: default;
+}
+
+#room-wrapper {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 80%; min-width: 1200px; height: auto; z-index: 10;
+}
+.room-structure { width: 100%; height: auto; display: block; }
+#text-carousel {
+    position: absolute; top: 5%; left: 5%; width: auto; text-align: left;
+    font-size: 1.5rem; color: white; text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    opacity: 0; transition: opacity 1s ease-in-out; pointer-events: none; z-index: 100;
+}
+.bgm-credit {
+    position: absolute; bottom: 20px; right: 30px; font-size: 0.9rem;
+    color: #380000; font-weight: bold; z-index: 100;
+}
+.interactive-object, .sound-object {
+    position: absolute; height: auto; cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); z-index: 20;
+}
+.interactive-object:hover, .sound-object:hover {
+    transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(192, 220, 242, 0.8));
+}
+/* 오브젝트 배치 */
+#obj-window { width: 12%; top: 30%; left: 44%; }
+#obj-light { width: 6%; top: 59%; left: 25%; }
+#obj-pendulum { width: 8%; top: 61.5%; left: 36%; }
+#obj-candle { width: 12%; top: 68%; left: 52%; }
+#obj-mirror { width: 8%; top: 40%; left: 71%; }
+
+/* --- 3. 공통 씬 스타일 --- */
+.scene { background-color: #380000; }
+.scene h3 { font-size: 2rem; margin-bottom: 10px; }
+.scene p { margin-bottom: 40px; font-size: 1.2rem; }
+.back-btn {
+    position: absolute; bottom: 50px; padding: 10px 30px;
+    background: transparent; border: 2px solid #c0dcf2; color: #c0dcf2;
+    font-family: inherit; font-size: 1.2rem; border-radius: 30px; cursor: pointer;
+    z-index: 100; transition: all 0.3s;
+}
+.back-btn:hover { background: #c0dcf2; color: #380000; }
+
+/* --- 4. 비 (Rain) --- */
+.rain { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.rain.back-row { display: block; opacity: 0.5; }
+.drop { position: absolute; bottom: 100%; width: 15px; height: 120px; pointer-events: none; animation: drop 0.5s linear infinite; }
+@keyframes drop { 0% { transform: translateY(0vh); } 75% { transform: translateY(90vh); } 100% { transform: translateY(90vh); } }
+.stem { width: 3px; height: 60%; margin-left: 7px; background: linear-gradient(to bottom, rgba(192, 220, 242, 0), rgba(192, 220, 242, 0.5)); animation: stem 0.5s linear infinite; }
+@keyframes stem { 0% { opacity: 1; } 65% { opacity: 1; } 75% { opacity: 0; } 100% { opacity: 0; } }
+
+/* --- 5. 추 (Pendulum) --- */
+#scene-pendulum h3, #scene-pendulum p { position: absolute; left: 0; width: 100%; text-align: center; z-index: 20; margin: 0; }
+#scene-pendulum h3 { top: 15%; }
+#scene-pendulum p { top: 25%; }
+.pendulum {
+    position: absolute; width: 220px; height: 180px; background-color: transparent;
+    top: 50%; left: 50%; border-radius: 5%; align-items: center;
+    border-top: 15px solid #c0dcf2; transform: translate(-50%, -50%);
+}
+.pendulum_box { display: flex; padding: 120px 0 0 10px; position: absolute; flex: 1; }
+.ball { height: 40px; width: 40px; border-radius: 50%; background-color: #c0dcf2; position: relative; transform-origin: 50% -300%; }
+.ball::before { content: ''; width: 2px; height: 120px; background-color: #c0dcf2; left: 19px; top: -120px; position: absolute; }
+.ball.first { animation: firstball .9s alternate ease-in infinite; }
+@keyframes firstball { 0% { transform: rotate(35deg); } 50% { transform: rotate(0deg); } }
+.ball.last { animation: lastball .9s alternate ease-out infinite; }
+@keyframes lastball { 50% { transform: rotate(0deg); } 100% { transform: rotate(-35deg); } }
+
+
+/* --- 6. 촛불 (Candle) & 호흡 & 파티클 --- */
+.particle-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+}
+.particle {
+    position: absolute; bottom: -20px; width: 4px; height: 4px;
+    background: rgba(255, 255, 255, 0.4); border-radius: 50%;
+    animation: floatUp 15s infinite linear;
+}
+.particle:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; }
+.particle:nth-child(2) { left: 20%; animation-duration: 18s; animation-delay: 2s; width: 6px; height: 6px; }
+.particle:nth-child(3) { left: 40%; animation-duration: 15s; animation-delay: 5s; }
+.particle:nth-child(4) { left: 60%; animation-duration: 20s; animation-delay: 1s; width: 3px; height: 3px;}
+.particle:nth-child(5) { left: 80%; animation-duration: 14s; animation-delay: 7s; }
+.particle:nth-child(6) { left: 90%; animation-duration: 16s; animation-delay: 3s; width: 5px; height: 5px;}
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+.meditation-container {
+    display: flex; justify-content: center; align-items: center;
+    gap: 120px; 
+    width: 100%; height: 400px;
+    transform: scale(0.7); 
+    margin-bottom: 20px;
+    z-index: 10;
+}
+
+.breath-side {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 220px; height: 220px; 
+    position: relative;
+}
+
+.ripple-circle {
+    position: absolute; width: 100%; height: 100%;
+    border: 2px solid rgba(192, 220, 242, 0.3); border-radius: 50%;
+    opacity: 0;
+}
+.breath-text {
+    font-size: 1.8rem; color: #fff; font-weight: bold;
+    text-shadow: 0 0 10px rgba(192, 220, 242, 0.8);
+    opacity: 0; z-index: 2;
+    white-space: nowrap; 
+}
+
+.breath-side.left .ripple-circle { animation: rippleIn 8s ease-in-out infinite; }
+.breath-side.left .breath-text { animation: fadeTextIn 8s ease-in-out infinite; }
+.breath-side.right .ripple-circle { animation: rippleOut 8s ease-in-out infinite; }
+.breath-side.right .breath-text { animation: fadeTextOut 8s ease-in-out infinite; }
+
+@keyframes rippleIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    25% { transform: scale(1.1); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes fadeTextIn {
+    0% { opacity: 0; } 10% { opacity: 1; } 40% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 0; }
+}
+@keyframes rippleOut {
+    0% { opacity: 0; }
+    50% { transform: scale(1.3); opacity: 0; }
+    75% { transform: scale(1.1); opacity: 0.5; }
+    100% { transform: scale(0.5); opacity: 0; }
+}
+@keyframes fadeTextOut {
+    0% { opacity: 0; } 50% { opacity: 0; } 60% { opacity: 1; } 90% { opacity: 1; } 100% { opacity: 0; }
+}
+
+.holder { width: 150px; height: 400px; position: relative; }
+.holder *, .holder *:before, .holder *:after { position: absolute; content: ""; }
+.candle {
+    bottom: 0; width: 150px; height: 300px; border-radius: 150px / 40px;
+    box-shadow: inset 20px -30px 50px 0 rgba(0,0,0,0.1), inset -20px 0 50px 0 rgba(0,0,0,0.1);
+    background: #ffffff;
+    background: linear-gradient(#ffffff, #e6f0fa, #c0dcf2, #8ab6d6 80%, #5a8ab0);
+}
+.candle:before {
+    width: 100%; height: 40px; border-radius: 50%;
+    border: 2px solid #ffffff;
+    background: #f0f8ff;
+    background: radial-gradient(#ffffff, #dbe9f5 45%, #c0dcf2 80%);
+}
+.candle:after {
+    width: 34px; height: 10px; left: 50%; transform: translateX(-50%);
+    border-radius: 50%; top: 14px;
+    background: radial-gradient(rgba(0,0,0,0.2), transparent 45%);
+}
+.thread {
+    width: 6px; height: 36px; top: -17px; left: 50%; z-index: 1;
+    border-radius: 40% 40% 0 0; transform: translateX(-50%);
+    background: #333;
+}
+.flame {
+    width: 24px; height: 120px; left: 50%; transform-origin: 50% 100%;
+    transform: translateX(-50%); bottom: 100%; border-radius: 50% 50% 20% 20%;
+    background: rgba(255, 255, 255, 1);
+    background: linear-gradient(white 60%, rgba(135, 206, 250, 0.5));
+    animation: moveFlame 6s linear infinite, enlargeFlame 5s linear infinite;
+    box-shadow: 0 0 20px rgba(135, 206, 250, 0.8), 0 0 40px rgba(135, 206, 250, 0.4);
+}
+.flame:before {
+    width: 100%; height: 100%; border-radius: 50% 50% 20% 20%;
+    box-shadow: 0 0 15px 0 rgba(135, 206, 250, 0.6);
+}
+@keyframes moveFlame { 0%, 100% { transform: translateX(-50%) rotate(-2deg); } 50% { transform: translateX(-50%) rotate(2deg); } }
+@keyframes enlargeFlame { 0%, 100% { height: 120px; } 50% { height: 140px; } }
+.glow {
+    width: 26px; height: 60px; border-radius: 50% 50% 35% 35%;
+    left: 50%; top: -48px; transform: translateX(-50%);
+    background: rgba(135, 206, 250, 0.3);
+}
+.blinking-blow {
+    width: 100px; height: 180px; left: 50%; top: -55%;
+    transform: translateX(-50%); border-radius: 50%;
+    background: rgba(135, 206, 250, 0.4);
+    filter: blur(50px);
+    animation: blinkIt 0.2s infinite;
+}
+@keyframes blinkIt { 50% { opacity: 0.8; } }
